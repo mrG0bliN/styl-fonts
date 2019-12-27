@@ -1,0 +1,61 @@
+// GLOBAL
+__fontMain    = 'Montserrat';
+__fontPrimal  = 'Roboto';
+__fontGlyphs  = 'Glyphs';
+
+__fontPreffix = 'i-';
+
+/* ==== FONTS ==== */
+  fglyph  = __fontPreffix + __fontGlyphs;
+  fmain   = __fontPreffix + __fontMain, sans-serif;
+  fprimal = __fontPreffix + __fontPrimal, sans-serif;
+/* ==== ---- ==== */
+
+/* === SCOPED font-variant === */
+  $$lightGroupName = 'Light' 'Regular' 'Bold';
+  $$lightGroupNumber = 300 400 700
+
+  $$fullGroupName = 'Thin' 'Light' 'Regular' 'Medium' 'Bold' 'Black';
+  $$fullGroupNumber = 100 300 400 500 700 900
+  
+  $$fontType = 'woff2' 'woff' 'ttf'
+
+/* ==== ---- ==== */
+
+/* ==== -------------------- MainFonts -------------------- ==== */
+// singleFolder
+allFonts(name, arrName, arrNumber) {
+    dirName = './fonts' + '/' + name + '/'
+
+    pasteCodeHere() { 
+     for el, z in $$fontType {
+        ( url( dirName + name + '-' + arrName[z] '.' el ) format( el ) )
+    }
+    
+    newcode(_i) {
+       for elem in _i {
+         ( pasteCodeHere(elem) )
+       }
+    }
+    
+  @font-face {
+    font-family: __fontPreffix + name;
+    src: local( __fontPreffix + name + '-' + arrName[i]),
+    local( __fontPreffix + name + '-' + arrNumber[i] ),
+    newcode(i)
+     // 'url(' +dirName + el + '/' +  group[i] + '.' +el+ ') format(' +el+ ')',
+    // url( dirName + type[0] + '/' +  group[i] + '.' type[0] ) format( type[0] ),
+    // url( dirName + type[1] + '/' +  group[i] + '.' type[1] ) format( type[1] ),
+    // url( dirName + type[2] + '/' +  group[i] + '.' type[2] ) format( type[2] )
+    // url();
+    font-style: normal;
+    font-weight: arrNumber[i];
+    font-display: swap;
+  }
+}
+/* ==== ------------------------------------------------- ==== */
+
+ /* ==== Loader ==== */
+ for i in 0 .. 5 {
+  allFonts(__fontMain, $$fullGroupName, $$fullGroupNumber);
+}
